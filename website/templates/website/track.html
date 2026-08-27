@@ -351,21 +351,19 @@
 
     <div class="tracking-box">
 
-        <form method="GET">
+        <form method="GET" action="{% url 'track_shipment' %}">
+    <input
+        type="text"
+        name="tracking_number"
+        placeholder="Enter tracking number"
+        value="{{ tracking_number|default:'' }}"
+        required
+    >
 
-            <input
-                type="text"
-                name="tracking_number"
-                placeholder="Enter tracking number"
-                value="{{ tracking_number|default:'' }}"
-                required
-            >
-
-            <button type="submit">
-                Track Shipment
-            </button>
-
-        </form>
+    <button type="submit">
+        Track Shipment
+    </button>
+</form>
 
     </div>
 
