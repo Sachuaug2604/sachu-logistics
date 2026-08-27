@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SACHU LOGISTICS</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            color: #222;
+        }
+
+        /* Navigation */
+        nav {
+            background: #0b1f3a;
+            color: white;
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            background: white;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #0b1f3a;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: #666;
+        }
+
+        /* Tracking */
+        .tracking-box {
+            margin: 40px auto 0;
+            max-width: 650px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .tracking-box input {
+            flex: 1;
+            padding: 16px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        .tracking-box button {
+            padding: 16px 28px;
+            background: #0b1f3a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .tracking-box button:hover {
+            background: #163d70;
+        }
+
+        /* Services */
+        .services {
+            padding: 70px 20px;
+            text-align: center;
+        }
+
+        .services h2 {
+            font-size: 32px;
+            color: #0b1f3a;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            width: 260px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            color: #0b1f3a;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: #0b1f3a;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        footer p {
+            margin: 5px;
+        }
+
+        /* Mobile */
+        @media (max-width: 700px) {
+
+            nav {
+                padding: 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .tracking-box {
+                flex-direction: column;
+            }
+
+            .tracking-box input,
+            .tracking-box button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav>
+
+        <div class="logo">
+            SACHU LOGISTICS
+        </div>
+
+        <div>
+            <a href="#">Home</a>
+            <a href="#">Track Shipment</a>
+            <a href="#">Services</a>
+            <a href="#">Contact</a>
+        </div>
+
+    </nav>
+
+
+    <!-- Hero Section -->
+    <section class="hero">
+
+        <h1>Fast. Reliable. Delivered.</h1>
+
+        <p>
+            Your trusted logistics and delivery partner.
+        </p>
+
+
+        <!-- Tracking Box -->
+        <div class="tracking-box">
+
+            <input
+                type="text"
+                placeholder="Enter your tracking number"
+            >
+
+            <button>
+                TRACK
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- Services -->
+    <section class="services">
+
+        <h2>Our Services</h2>
+
+        <div class="cards">
+
+            <div class="card">
+
+                <h3>📦 Parcel Delivery</h3>
+
+                <p>
+                    Safe and reliable delivery of packages
+                    from pickup to destination.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>🚚 Express Delivery</h3>
+
+                <p>
+                    Fast delivery solutions for
+                    time-sensitive shipments.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>🏢 Business Logistics</h3>
+
+                <p>
+                    Reliable logistics solutions
+                    for businesses of all sizes.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <p>© 2026 SACHU LOGISTICS</p>
+
+        <p>
+            Educational / Demo Logistics Management System
+        </p>
+
+    </footer>
+
+</body>
+</html>

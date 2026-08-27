@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Track Shipment | SACHU LOGISTICS</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        /* Header */
+
+        .header {
+            background: #111827;
+            color: white;
+            padding: 22px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .tagline {
+            color: #d1d5db;
+            font-size: 14px;
+        }
+
+        /* Main Container */
+
+        .container {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        /* Hero */
+
+        .hero {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            color: #6b7280;
+        }
+
+        /* Tracking Search Box */
+
+        .tracking-box {
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            gap: 12px;
+        }
+
+        input {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #2563eb;
+        }
+
+        button {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        /* Shipment Card */
+
+        .shipment-card {
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .shipment-card h2 {
+            margin-bottom: 25px;
+        }
+
+        /* Shipment Details */
+
+        .details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .detail {
+            background: #f9fafb;
+            padding: 16px;
+            border-radius: 8px;
+        }
+
+        .detail span {
+            display: block;
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 6px;
+        }
+
+        .detail strong {
+            font-size: 16px;
+        }
+
+        /* Status Badge */
+
+        .status {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 20px;
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        /* Not Found */
+
+        .not-found {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            color: #dc2626;
+        }
+
+        .not-found h3 {
+            margin-bottom: 8px;
+        }
+
+        /* Tracking Timeline */
+
+        .timeline {
+            margin-top: 35px;
+            padding: 10px 5px;
+        }
+
+        .timeline-title {
+            font-size: 20px;
+            margin-bottom: 30px;
+            color: #111827;
+        }
+
+        .timeline-item {
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            min-height: 75px;
+        }
+
+        /* Vertical line */
+
+        .timeline-line {
+            position: absolute;
+            left: 14px;
+            top: 30px;
+            width: 3px;
+            height: 45px;
+            background: #d1d5db;
+        }
+
+        .timeline-item.completed .timeline-line {
+            background: #2563eb;
+        }
+
+        .timeline-item:last-child .timeline-line {
+            display: none;
+        }
+
+        /* Timeline Circle */
+
+        .timeline-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #e5e7eb;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 14px;
+            font-weight: bold;
+            color: #6b7280;
+
+            z-index: 2;
+            flex-shrink: 0;
+        }
+
+        /* Completed */
+
+        .timeline-item.completed .timeline-icon {
+            background: #2563eb;
+            color: white;
+        }
+
+        /* Current */
+
+        .timeline-item.current .timeline-icon {
+            background: #2563eb;
+            color: white;
+            box-shadow: 0 0 0 5px #dbeafe;
+        }
+
+        /* Timeline Text */
+
+        .timeline-content {
+            margin-left: 18px;
+            padding-bottom: 25px;
+        }
+
+        .timeline-content h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #6b7280;
+        }
+
+        .timeline-item.completed .timeline-content h4 {
+            color: #111827;
+        }
+
+        .timeline-content p {
+            font-size: 13px;
+            color: #9ca3af;
+        }
+
+        .timeline-item.current .timeline-content h4 {
+            color: #2563eb;
+            font-weight: bold;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 600px) {
+
+            .header {
+                padding: 18px 5%;
+            }
+
+            .logo {
+                font-size: 21px;
+            }
+
+            .tagline {
+                display: none;
+            }
+
+            .container {
+                margin: 35px auto;
+                padding: 0 15px;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            form {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+
+            .tracking-box,
+            .shipment-card {
+                padding: 22px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">
+        SACHU LOGISTICS
+    </div>
+
+    <div class="tagline">
+        Fast. Reliable. Delivered.
+    </div>
+
+</header>
+
+
+<div class="container">
+
+    <!-- Hero -->
+
+    <div class="hero">
+
+        <h1>Track Your Shipment</h1>
+
+        <p>
+            Enter your tracking number to see the latest shipment information.
+        </p>
+
+    </div>
+
+
+    <!-- Tracking Search -->
+
+    <div class="tracking-box">
+
+        <form method="GET">
+
+            <input
+                type="text"
+                name="tracking_number"
+                placeholder="Enter tracking number"
+                value="{{ tracking_number|default:'' }}"
+                required
+            >
+
+            <button type="submit">
+                Track Shipment
+            </button>
+
+        </form>
+
+    </div>
+
+
+    {% if shipment %}
+
+    <!-- Shipment Information -->
+
+    <div class="shipment-card">
+
+        <h2>Shipment Details</h2>
+
+
+        <!-- Shipment Details Grid -->
+
+        <div class="details">
+
+            <div class="detail">
+
+                <span>Tracking Number</span>
+
+                <strong>
+                    {{ shipment.tracking_number }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span>Status</span>
+
+                <strong class="status">
+                    {{ shipment.get_status_display }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span>Sender</span>
+
+                <strong>
+                    {{ shipment.sender_name }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span>Receiver</span>
+
+                <strong>
+                    {{ shipment.receiver_name }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span>Origin</span>
+
+                <strong>
+                    {{ shipment.origin }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span>Destination</span>
+
+                <strong>
+                    {{ shipment.destination }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span>Current Location</span>
+
+                <strong>
+                    {{ shipment.current_location }}
+                </strong>
+
+            </div>
+
+
+            <div class="detail">
+
+                <span>Estimated Delivery</span>
+
+                <strong>
+                    {{ shipment.estimated_delivery|default:"Not available" }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- Shipment Progress Timeline -->
+
+        <div class="timeline">
+
+            <h3 class="timeline-title">
+                Shipment Progress
+            </h3>
+
+
+            {% for code, name in status_steps %}
+
+            <div class="timeline-item
+                {% if forloop.counter0 < current_step %}completed{% endif %}
+                {% if forloop.counter0 == current_step %}current{% endif %}">
+
+
+                <!-- Timeline Icon -->
+
+                <div class="timeline-icon">
+
+                    {% if forloop.counter0 < current_step %}
+
+                        ✓
+
+                    {% elif forloop.counter0 == current_step %}
+
+                        ●
+
+                    {% else %}
+
+                        ○
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- Timeline Line -->
+
+                {% if not forloop.last %}
+
+                    <div class="timeline-line"></div>
+
+                {% endif %}
+
+
+                <!-- Timeline Content -->
+
+                <div class="timeline-content">
+
+                    <h4>
+                        {{ name }}
+                    </h4>
+
+
+                    {% if forloop.counter0 < current_step %}
+
+                        <p>
+                            Completed
+                        </p>
+
+                    {% elif forloop.counter0 == current_step %}
+
+                        <p>
+                            Current shipment status
+                        </p>
+
+                    {% else %}
+
+                        <p>
+                            Pending
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    {% elif tracking_number %}
+
+    <!-- Shipment Not Found -->
+
+    <div class="not-found">
+
+        <h3>
+            Shipment Not Found
+        </h3>
+
+        <p>
+            Please check your tracking number and try again.
+        </p>
+
+    </div>
+
+    {% endif %}
+
+
+</div>
+
+</body>
+
+</html>
