@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from .models import Shipment
 
 
@@ -11,10 +11,9 @@ def track_shipment(request):
     tracking_number = request.GET.get('tracking_number')
 
     if tracking_number:
-        shipment = get_object_or_404(
-            Shipment,
-            tracking_number=tracking_number.strip()
-        )
+        shipment = Shipment.objects.filter(
+            tracking_number__iexact=tracking_number.strip()
+        ).first()
 
     status_steps = [
         ('ORDER_RECEIVED', 'Order Received'),
