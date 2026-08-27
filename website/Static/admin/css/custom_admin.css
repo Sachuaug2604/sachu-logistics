@@ -1,0 +1,43 @@
+/* Sachu Logistics Admin Panel */
+
+#header {
+    background: #0f172a;
+}
+
+#branding h1 a {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+#user-tools {
+    color: #e2e8f0;
+}
+
+#user-tools a {
+    color: #ffffff;
+}
+
+div.breadcrumbs {
+    background: #334155;
+}
+
+.module h2,
+.module caption {
+    background: #1e293b;
+}
+
+.button,
+input[type=submit],
+input[type=button],
+.submit-row input,
+a.button {
+    background: #2563eb;
+}
+
+.button:hover,
+input[type=submit]:hover,
+input[type=button]:hover,
+.submit-row input:hover,
+a.button:hover {
+    background: #1d4ed8;
+}

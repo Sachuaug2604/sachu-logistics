@@ -1,8 +1,11 @@
 from django.contrib import admin
 from .models import Shipment
 
+admin.site.site_header = "Sachu Logistics"
+admin.site.site_title = "Sachu Logistics"
+admin.site.index_title = "Sachu Logistics Dashboard"
 
-@admin.register(Shipment)
+admin.site.register(Shipment)
 class ShipmentAdmin(admin.ModelAdmin):
 
     list_display = (
