@@ -56,3 +56,38 @@ class Shipment(models.Model):
 
     def __str__(self):
         return self.tracking_number
+
+
+class TrackingUpdate(models.Model):
+
+    shipment = models.ForeignKey(
+        Shipment,
+        on_delete=models.CASCADE,
+        related_name='tracking_updates'
+    )
+
+    status = models.CharField(
+        max_length=30,
+        choices=Shipment.STATUS_CHOICES
+    )
+
+    location = models.CharField(
+        max_length=100
+    )
+
+    description = models.CharField(
+        max_length=255,
+        blank=True
+    )
+
+    timestamp = models.DateTimeField()
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+        ordering = ['-timestamp']
+
+    def __str__(self):
+        return f"{self.shipment.tracking_number} - {self.get_status_display()}"

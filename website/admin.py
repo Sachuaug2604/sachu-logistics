@@ -1,11 +1,19 @@
 from django.contrib import admin
-from .models import Shipment
+from .models import Shipment, TrackingUpdate
+
 
 admin.site.site_header = "Sachu Logistics"
 admin.site.site_title = "Sachu Logistics"
 admin.site.index_title = "Sachu Logistics Dashboard"
 
-admin.site.register(Shipment)
+
+class TrackingUpdateInline(admin.TabularInline):
+    model = TrackingUpdate
+    extra = 1
+    ordering = ('-timestamp',)
+
+
+@admin.register(Shipment)
 class ShipmentAdmin(admin.ModelAdmin):
 
     list_display = (
@@ -35,3 +43,30 @@ class ShipmentAdmin(admin.ModelAdmin):
     )
 
     ordering = ('-created_at',)
+
+    inlines = [TrackingUpdateInline]
+
+
+@admin.register(TrackingUpdate)
+class TrackingUpdateAdmin(admin.ModelAdmin):
+
+    list_display = (
+        'shipment',
+        'status',
+        'location',
+        'description',
+        'timestamp',
+    )
+
+    list_filter = (
+        'status',
+        'location',
+    )
+
+    search_fields = (
+        'shipment__tracking_number',
+        'location',
+        'description',
+    )
+
+    ordering = ('-timestamp',)

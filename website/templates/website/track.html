@@ -449,7 +449,7 @@
 
             <div class="detail">
 
-                <span>Current Location</span>
+                <span>Current Status</span>
 
                 <strong>
                     {{ shipment.current_location }}
@@ -471,110 +471,127 @@
         </div>
 
 
-        <!-- Shipment Progress Timeline -->
+    
+    <!-- Shipment Progress Timeline -->
 
-        <div class="timeline">
+    <div class="timeline">
 
-            <h3 class="timeline-title">
-                Shipment Progress
-            </h3>
+        <h3 class="timeline-title">
+            Shipment Progress
+        </h3>
 
+        {% for code, name in status_steps %}
 
-            {% for code, name in status_steps %}
+        <div class="timeline-item
+            {% if forloop.counter0 < current_step %}completed{% endif %}
+            {% if forloop.counter0 == current_step %}current{% endif %}">
 
-            <div class="timeline-item
-                {% if forloop.counter0 < current_step %}completed{% endif %}
-                {% if forloop.counter0 == current_step %}current{% endif %}">
+            <div class="timeline-icon">
 
-
-                <!-- Timeline Icon -->
-
-                <div class="timeline-icon">
-
-                    {% if forloop.counter0 < current_step %}
-
-                        ✓
-
-                    {% elif forloop.counter0 == current_step %}
-
-                        ●
-
-                    {% else %}
-
-                        ○
-
-                    {% endif %}
-
-                </div>
-
-
-                <!-- Timeline Line -->
-
-                {% if not forloop.last %}
-
-                    <div class="timeline-line"></div>
-
+                {% if forloop.counter0 < current_step %}
+                    ✓
+                {% elif forloop.counter0 == current_step %}
+                    ●
+                {% else %}
+                    ○
                 {% endif %}
-
-
-                <!-- Timeline Content -->
-
-                <div class="timeline-content">
-
-                    <h4>
-                        {{ name }}
-                    </h4>
-
-
-                    {% if forloop.counter0 < current_step %}
-
-                        <p>
-                            Completed
-                        </p>
-
-                    {% elif forloop.counter0 == current_step %}
-
-                        <p>
-                            Current shipment status
-                        </p>
-
-                    {% else %}
-
-                        <p>
-                            Pending
-                        </p>
-
-                    {% endif %}
-
-                </div>
 
             </div>
 
-            {% endfor %}
+            {% if not forloop.last %}
+                <div class="timeline-line"></div>
+            {% endif %}
+
+            <div class="timeline-content">
+
+                <h4>{{ name }}</h4>
+
+                {% if forloop.counter0 < current_step %}
+                    <p>Completed</p>
+                {% elif forloop.counter0 == current_step %}
+                    <p>Current shipment status</p>
+                {% else %}
+                    <p>Pending</p>
+                {% endif %}
+
+            </div>
 
         </div>
+
+        {% endfor %}
 
     </div>
 
 
-    {% elif tracking_number %}
+    <!-- Recent Tracking Updates -->
 
-    <!-- Shipment Not Found -->
+    {% if tracking_updates %}
 
-    <div class="not-found">
+    <div class="shipment-card" style="margin-top: 30px;">
 
-        <h3>
-            Shipment Not Found
-        </h3>
+        <h2>Recent Status</h2>
 
-        <p>
-            Please check your tracking number and try again.
-        </p>
+        {% for update in tracking_updates %}
+
+        <div style="
+            padding: 20px;
+            border-left: 4px solid #2563eb;
+            background: #f9fafb;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        ">
+
+            <h3 style="margin-bottom: 8px;">
+                {{ update.get_status_display }}
+            </h3>
+
+            {% if update.description %}
+            <p style="margin-bottom: 10px;">
+                {{ update.description }}
+            </p>
+            {% endif %}
+
+            <p style="
+                color: #6b7280;
+                font-size: 14px;
+                margin-bottom: 5px;
+            ">
+                📍 {{ update.location }}
+            </p>
+
+            <p style="
+                color: #6b7280;
+                font-size: 14px;
+            ">
+                🕐 {{ update.timestamp|date:"d M Y, h:i A" }}
+            </p>
+
+        </div>
+
+        {% endfor %}
 
     </div>
 
     {% endif %}
 
+</div>
+
+
+{% elif tracking_number %}
+
+<!-- Shipment Not Found -->
+
+<div class="not-found">
+
+    <h3>Shipment Not Found</h3>
+
+    <p>
+        Please check your tracking number and try again.
+    </p>
+
+</div>
+
+{% endif %}
 
 </div>
 

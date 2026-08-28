@@ -25,10 +25,22 @@ def track_shipment(request):
     ]
 
     current_step = -1
+    tracking_updates = []
 
     if shipment:
+        # Get the latest tracking update
+        tracking_updates = shipment.tracking_updates.all().order_by('-timestamp')
+
+        # Use the latest tracking update as the current status
+        if tracking_updates.exists():
+            latest_update = tracking_updates.first()
+            current_status = latest_update.status
+        else:
+            current_status = shipment.status
+
+        # Find the current step in the timeline
         for index, (code, name) in enumerate(status_steps):
-            if code == shipment.status:
+            if code == current_status:
                 current_step = index
                 break
 
@@ -40,5 +52,6 @@ def track_shipment(request):
             'tracking_number': tracking_number,
             'status_steps': status_steps,
             'current_step': current_step,
+            'tracking_updates': tracking_updates,
         }
     )
