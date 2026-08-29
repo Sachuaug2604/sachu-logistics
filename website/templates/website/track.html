@@ -8,6 +8,11 @@
     <title>Track Shipment | SACHU LOGISTICS</title>
 
     <style>
+
+        /* ==============================
+           GLOBAL
+        ============================== */
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -20,7 +25,10 @@
             color: #1f2937;
         }
 
-        /* Header */
+
+        /* ==============================
+           HEADER
+        ============================== */
 
         .header {
             background: #111827;
@@ -41,7 +49,10 @@
             font-size: 14px;
         }
 
-        /* Main Container */
+
+        /* ==============================
+           MAIN CONTAINER
+        ============================== */
 
         .container {
             max-width: 900px;
@@ -49,7 +60,10 @@
             padding: 0 20px;
         }
 
-        /* Hero */
+
+        /* ==============================
+           HERO
+        ============================== */
 
         .hero {
             text-align: center;
@@ -65,7 +79,10 @@
             color: #6b7280;
         }
 
-        /* Tracking Search Box */
+
+        /* ==============================
+           TRACKING SEARCH BOX
+        ============================== */
 
         .tracking-box {
             background: white;
@@ -108,7 +125,10 @@
             background: #1d4ed8;
         }
 
-        /* Shipment Card */
+
+        /* ==============================
+           SHIPMENT CARD
+        ============================== */
 
         .shipment-card {
             background: white;
@@ -121,7 +141,10 @@
             margin-bottom: 25px;
         }
 
-        /* Shipment Details */
+
+        /* ==============================
+           SHIPMENT DETAILS
+        ============================== */
 
         .details {
             display: grid;
@@ -146,7 +169,10 @@
             font-size: 16px;
         }
 
-        /* Status Badge */
+
+        /* ==============================
+           STATUS BADGE
+        ============================== */
 
         .status {
             display: inline-block;
@@ -156,7 +182,10 @@
             color: #1d4ed8;
         }
 
-        /* Not Found */
+
+        /* ==============================
+           NOT FOUND
+        ============================== */
 
         .not-found {
             background: white;
@@ -170,7 +199,10 @@
             margin-bottom: 8px;
         }
 
-        /* Tracking Timeline */
+
+        /* ==============================
+           TIMELINE
+        ============================== */
 
         .timeline {
             margin-top: 35px;
@@ -190,7 +222,10 @@
             min-height: 75px;
         }
 
-        /* Vertical line */
+
+        /* ==============================
+           VERTICAL LINE
+        ============================== */
 
         .timeline-line {
             position: absolute;
@@ -199,6 +234,7 @@
             width: 3px;
             height: 45px;
             background: #d1d5db;
+            z-index: 0;
         }
 
         .timeline-item.completed .timeline-line {
@@ -209,12 +245,18 @@
             display: none;
         }
 
-        /* Timeline Circle */
+
+        /* ==============================
+           TIMELINE CIRCLE
+        ============================== */
 
         .timeline-icon {
             width: 30px;
             height: 30px;
+            min-width: 30px;
+
             border-radius: 50%;
+
             background: #e5e7eb;
 
             display: flex;
@@ -226,8 +268,10 @@
             color: #6b7280;
 
             z-index: 2;
-            flex-shrink: 0;
+
+            position: relative;
         }
+
 
         /* Completed */
 
@@ -236,19 +280,244 @@
             color: white;
         }
 
+
         /* Current */
 
         .timeline-item.current .timeline-icon {
             background: #2563eb;
             color: white;
-            box-shadow: 0 0 0 5px #dbeafe;
+
+            box-shadow:
+                0 0 0 5px #dbeafe,
+                0 0 0 9px rgba(37, 99, 235, 0.08);
         }
 
-        /* Timeline Text */
+
+        /* ==============================
+           ANIMATION ICON
+        ============================== */
+
+        .stage-animation {
+            position: absolute;
+
+            width: 30px;
+            height: 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 20px;
+
+            z-index: 5;
+        }
+
+        /*
+        Hide animation by default.
+        Only the current stage shows its animation.
+        */
+
+        .stage-animation {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .timeline-item.current .stage-animation {
+            opacity: 1;
+        }
+
+        /*
+        Hide the normal current dot when
+        the animated icon is displayed.
+        */
+
+        .timeline-item.current .normal-icon {
+            opacity: 0;
+        }
+
+
+        /* ==============================
+           1. ORDER RECEIVED
+           Package Pulse
+        ============================== */
+
+        .animation-received {
+            animation: packagePulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes packagePulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.25);
+            }
+        }
+
+
+        /* ==============================
+           2. PICKED UP
+           Package Bounce
+        ============================== */
+
+        .animation-picked {
+            animation: packagePickup 1.3s ease-in-out infinite;
+        }
+
+        @keyframes packagePickup {
+
+            0%,
+            100% {
+                transform: translateY(2px);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+
+        /* ==============================
+           3. IN TRANSIT
+           TRUCK
+        ============================== */
+
+        .animation-transit {
+            animation:
+                truckMove 1.5s ease-in-out infinite,
+                truckBounce 0.7s ease-in-out infinite;
+        }
+
+        @keyframes truckMove {
+
+            0% {
+                transform: translateX(-3px);
+            }
+
+            50% {
+                transform: translateX(4px);
+            }
+
+            100% {
+                transform: translateX(-3px);
+            }
+        }
+
+        @keyframes truckBounce {
+
+            0%,
+            100% {
+                margin-top: 0;
+            }
+
+            50% {
+                margin-top: 2px;
+            }
+        }
+
+
+        /* ==============================
+           4. ARRIVED AT HUB
+           Building Pulse
+        ============================== */
+
+        .animation-hub {
+            animation: hubPulse 1.6s ease-in-out infinite;
+        }
+
+        @keyframes hubPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.18);
+            }
+        }
+
+
+        /* ==============================
+           5. OUT FOR DELIVERY
+           Scooter Movement
+        ============================== */
+
+        .animation-delivery {
+            animation:
+                scooterMove 1.2s ease-in-out infinite,
+                scooterBounce 0.5s ease-in-out infinite;
+        }
+
+        @keyframes scooterMove {
+
+            0% {
+                transform: translateX(-3px);
+            }
+
+            50% {
+                transform: translateX(5px);
+            }
+
+            100% {
+                transform: translateX(-3px);
+            }
+        }
+
+        @keyframes scooterBounce {
+
+            0%,
+            100% {
+                margin-top: 0;
+            }
+
+            50% {
+                margin-top: 2px;
+            }
+        }
+
+
+        /* ==============================
+           6. DELIVERED
+           Package Delivered
+        ============================== */
+
+        .animation-delivered {
+            animation:
+                deliveredPop 1.4s ease-in-out infinite;
+        }
+
+        @keyframes deliveredPop {
+
+            0% {
+                transform: scale(1);
+            }
+
+            30% {
+                transform: scale(1.25);
+            }
+
+            60% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+
+        /* ==============================
+           TIMELINE CONTENT
+        ============================== */
 
         .timeline-content {
             margin-left: 18px;
             padding-bottom: 25px;
+            flex: 1;
         }
 
         .timeline-content h4 {
@@ -271,7 +540,42 @@
             font-weight: bold;
         }
 
-        /* Mobile */
+
+        /* ==============================
+           RECENT STATUS
+        ============================== */
+
+        .recent-update {
+            padding: 20px;
+            border-left: 4px solid #2563eb;
+            background: #f9fafb;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+
+        .recent-update h3 {
+            margin-bottom: 8px;
+        }
+
+        .recent-description {
+            margin-bottom: 10px;
+        }
+
+        .recent-location {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .recent-time {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+
+        /* ==============================
+           MOBILE
+        ============================== */
 
         @media (max-width: 600px) {
 
@@ -312,12 +616,36 @@
             .shipment-card {
                 padding: 22px;
             }
+
+            .timeline {
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+            .timeline-content {
+                margin-left: 15px;
+            }
+
+            .timeline-content h4 {
+                font-size: 16px;
+            }
+
+            .timeline-content p {
+                font-size: 13px;
+            }
         }
+
     </style>
 
 </head>
 
+
 <body>
+
+
+<!-- ==============================
+     HEADER
+============================== -->
 
 <header class="header">
 
@@ -334,11 +662,16 @@
 
 <div class="container">
 
-    <!-- Hero -->
+
+    <!-- ==============================
+         HERO
+    ============================== -->
 
     <div class="hero">
 
-        <h1>Track Your Shipment</h1>
+        <h1>
+            Track Your Shipment
+        </h1>
 
         <p>
             Enter your tracking number to see the latest shipment information.
@@ -347,43 +680,53 @@
     </div>
 
 
-    <!-- Tracking Search -->
+    <!-- ==============================
+         TRACKING SEARCH
+    ============================== -->
 
     <div class="tracking-box">
 
         <form method="GET" action="{% url 'track_shipment' %}">
-    <input
-        type="text"
-        name="tracking_number"
-        placeholder="Enter tracking number"
-        value="{{ tracking_number|default:'' }}"
-        required
-    >
 
-    <button type="submit">
-        Track Shipment
-    </button>
-</form>
+            <input
+                type="text"
+                name="tracking_number"
+                placeholder="Enter tracking number"
+                value="{{ tracking_number|default:'' }}"
+                required
+            >
+
+            <button type="submit">
+                Track Shipment
+            </button>
+
+        </form>
 
     </div>
 
 
     {% if shipment %}
 
-    <!-- Shipment Information -->
+
+    <!-- ==============================
+         SHIPMENT INFORMATION
+    ============================== -->
 
     <div class="shipment-card">
 
-        <h2>Shipment Details</h2>
+        <h2>
+            Shipment Details
+        </h2>
 
-
-        <!-- Shipment Details Grid -->
 
         <div class="details">
 
+
             <div class="detail">
 
-                <span>Tracking Number</span>
+                <span>
+                    Tracking Number
+                </span>
 
                 <strong>
                     {{ shipment.tracking_number }}
@@ -394,7 +737,9 @@
 
             <div class="detail">
 
-                <span>Status</span>
+                <span>
+                    Status
+                </span>
 
                 <strong class="status">
                     {{ shipment.get_status_display }}
@@ -405,7 +750,9 @@
 
             <div class="detail">
 
-                <span>Sender</span>
+                <span>
+                    Sender
+                </span>
 
                 <strong>
                     {{ shipment.sender_name }}
@@ -416,7 +763,9 @@
 
             <div class="detail">
 
-                <span>Receiver</span>
+                <span>
+                    Receiver
+                </span>
 
                 <strong>
                     {{ shipment.receiver_name }}
@@ -427,7 +776,9 @@
 
             <div class="detail">
 
-                <span>Origin</span>
+                <span>
+                    Origin
+                </span>
 
                 <strong>
                     {{ shipment.origin }}
@@ -438,7 +789,9 @@
 
             <div class="detail">
 
-                <span>Destination</span>
+                <span>
+                    Destination
+                </span>
 
                 <strong>
                     {{ shipment.destination }}
@@ -449,7 +802,9 @@
 
             <div class="detail">
 
-                <span>Current Status</span>
+                <span>
+                    Current Status
+                </span>
 
                 <strong>
                     {{ shipment.current_location }}
@@ -460,7 +815,9 @@
 
             <div class="detail">
 
-                <span>Estimated Delivery</span>
+                <span>
+                    Estimated Delivery
+                </span>
 
                 <strong>
                     {{ shipment.estimated_delivery|default:"Not available" }}
@@ -471,129 +828,237 @@
         </div>
 
 
-    
-    <!-- Shipment Progress Timeline -->
+        <!-- ==============================
+             SHIPMENT PROGRESS
+        ============================== -->
 
-    <div class="timeline">
+        <div class="timeline">
 
-        <h3 class="timeline-title">
-            Shipment Progress
-        </h3>
+            <h3 class="timeline-title">
+                Shipment Progress
+            </h3>
 
-        {% for code, name in status_steps %}
 
-        <div class="timeline-item
-            {% if forloop.counter0 < current_step %}completed{% endif %}
-            {% if forloop.counter0 == current_step %}current{% endif %}">
+            {% for code, name in status_steps %}
 
-            <div class="timeline-icon">
 
-                {% if forloop.counter0 < current_step %}
-                    ✓
-                {% elif forloop.counter0 == current_step %}
-                    ●
-                {% else %}
-                    ○
+            <div class="timeline-item
+                {% if forloop.counter0 < current_step %}completed{% endif %}
+                {% if forloop.counter0 == current_step %}current{% endif %}">
+
+
+                <!-- Timeline Circle -->
+
+                <div class="timeline-icon">
+
+
+                    <!-- NORMAL COMPLETED ICON -->
+
+                    {% if forloop.counter0 < current_step %}
+
+                        <span class="normal-icon">
+                            ✓
+                        </span>
+
+
+                    <!-- CURRENT STAGE -->
+
+                    {% elif forloop.counter0 == current_step %}
+
+                        <span class="normal-icon">
+                            ●
+                        </span>
+
+                    {% else %}
+
+                        <span class="normal-icon">
+                            ○
+                        </span>
+
+                    {% endif %}
+
+
+                    <!-- ==============================
+                         STAGE ANIMATIONS
+                    ============================== -->
+
+
+                    {% if code == "ORDER_RECEIVED" %}
+
+                        <span class="stage-animation animation-received">
+                            📦
+                        </span>
+
+                    {% elif code == "PICKED_UP" %}
+
+                        <span class="stage-animation animation-picked">
+                            📦
+                        </span>
+
+                    {% elif code == "IN_TRANSIT" %}
+
+                        <span class="stage-animation animation-transit">
+                            🚚
+                        </span>
+
+                    {% elif code == "AT_HUB" %}
+
+                        <span class="stage-animation animation-hub">
+                            🏢
+                        </span>
+
+                    {% elif code == "OUT_FOR_DELIVERY" %}
+
+                        <span class="stage-animation animation-delivery">
+                            🛵
+                        </span>
+
+                    {% elif code == "DELIVERED" %}
+
+                        <span class="stage-animation animation-delivered">
+                            🎁
+                        </span>
+
+                    {% endif %}
+
+
+                </div>
+
+
+                <!-- Vertical Line -->
+
+                {% if not forloop.last %}
+
+                    <div class="timeline-line"></div>
+
                 {% endif %}
+
+
+                <!-- Timeline Text -->
+
+                <div class="timeline-content">
+
+                    <h4>
+                        {{ name }}
+                    </h4>
+
+
+                    {% if forloop.counter0 < current_step %}
+
+                        <p>
+                            Completed
+                        </p>
+
+                    {% elif forloop.counter0 == current_step %}
+
+                        <p>
+                            Current shipment status
+                        </p>
+
+                    {% else %}
+
+                        <p>
+                            Pending
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
 
             </div>
 
-            {% if not forloop.last %}
-                <div class="timeline-line"></div>
-            {% endif %}
 
-            <div class="timeline-content">
+            {% endfor %}
 
-                <h4>{{ name }}</h4>
-
-                {% if forloop.counter0 < current_step %}
-                    <p>Completed</p>
-                {% elif forloop.counter0 == current_step %}
-                    <p>Current shipment status</p>
-                {% else %}
-                    <p>Pending</p>
-                {% endif %}
-
-            </div>
 
         </div>
 
-        {% endfor %}
 
     </div>
 
 
-    <!-- Recent Tracking Updates -->
+    <!-- ==============================
+         RECENT TRACKING UPDATES
+    ============================== -->
 
     {% if tracking_updates %}
 
+
     <div class="shipment-card" style="margin-top: 30px;">
 
-        <h2>Recent Status</h2>
+        <h2>
+            Recent Status
+        </h2>
+
 
         {% for update in tracking_updates %}
 
-        <div style="
-            padding: 20px;
-            border-left: 4px solid #2563eb;
-            background: #f9fafb;
-            margin-bottom: 15px;
-            border-radius: 8px;
-        ">
 
-            <h3 style="margin-bottom: 8px;">
+        <div class="recent-update">
+
+
+            <h3>
                 {{ update.get_status_display }}
             </h3>
 
+
             {% if update.description %}
-            <p style="margin-bottom: 10px;">
-                {{ update.description }}
-            </p>
+
+                <p class="recent-description">
+                    {{ update.description }}
+                </p>
+
             {% endif %}
 
-            <p style="
-                color: #6b7280;
-                font-size: 14px;
-                margin-bottom: 5px;
-            ">
+
+            <p class="recent-location">
                 📍 {{ update.location }}
             </p>
 
-            <p style="
-                color: #6b7280;
-                font-size: 14px;
-            ">
+
+            <p class="recent-time">
                 🕐 {{ update.timestamp|date:"d M Y, h:i A" }}
             </p>
 
+
         </div>
+
 
         {% endfor %}
 
+
     </div>
+
 
     {% endif %}
 
+
+    {% elif tracking_number %}
+
+
+    <!-- ==============================
+         SHIPMENT NOT FOUND
+    ============================== -->
+
+    <div class="not-found">
+
+        <h3>
+            Shipment Not Found
+        </h3>
+
+        <p>
+            Please check your tracking number and try again.
+        </p>
+
+    </div>
+
+
+    {% endif %}
+
+
 </div>
 
-
-{% elif tracking_number %}
-
-<!-- Shipment Not Found -->
-
-<div class="not-found">
-
-    <h3>Shipment Not Found</h3>
-
-    <p>
-        Please check your tracking number and try again.
-    </p>
-
-</div>
-
-{% endif %}
-
-</div>
 
 </body>
 
